@@ -21,5 +21,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Panggil FilmSeeder yang kamu buat di sini
+        $this->call([
+            FilmSeeder::class,
+        ]);
     }
 }
