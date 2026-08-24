@@ -15,16 +15,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Panggil RoleSeeder terlebih dahulu sebelum seeder lainnya
+        $this->call([
+            RoleSeeder::class,
+            FilmSeeder::class,
+        ]);
 
+        // User test jika ingin langsung diberi role_id (contoh: role_id = 1 untuk admin)
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-        ]);
-
-        // Panggil FilmSeeder yang kamu buat di sini
-        $this->call([
-            FilmSeeder::class,
+            'role_id' => 1,
         ]);
     }
 }
