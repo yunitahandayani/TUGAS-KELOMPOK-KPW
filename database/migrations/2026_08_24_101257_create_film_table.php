@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('film', function (Blueprint $table) {
-            $table->id(); 
+            $table->id();
             $table->string('judul', 45);
             $table->text('ringkasan');
             $table->integer('tahun');
@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('genre_id');
             $table->timestamps();
 
-            // Foreign key ke tabel genre
-            $table->foreign('genre_id')->references('id')->on('genre')->onDelete('cascade');
+            // Foreign key ke tabel genres
+            $table->foreign('genre_id')->references('id')->on('genres')->onDelete('cascade');
         });
     }
 
