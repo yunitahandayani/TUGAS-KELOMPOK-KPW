@@ -2,63 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 class GenreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $genres = Genre::all();
+
+        return view('genre.index', compact('genres'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('genre.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'nama' => 'required|string|max:255|unique:genre,nama',
+        ], [
+            'nama.required' => 'Nama genre wajib diisi!',
+            'nama.unique'   => 'Nama genre ini sudah ada di database.',
+            'nama.max'      => 'Nama genre maksimal 255 karakter.',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        Genre::create([
+            'nama' => $request->nama,
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('genre.index')->with('success', 'Genre berhasil ditambahkan!');
     }
 }
